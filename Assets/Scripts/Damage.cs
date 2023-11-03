@@ -9,6 +9,7 @@ public class Damage : MonoBehaviour
     public Image hpbar;
     private bool dealingDmg = false;
     private float dmgAmount = 0.2F;
+    private float dmgAmountTick = 0.01F;
     private float dmgBound;
     public float waitTime = 1.0f;
     
@@ -22,14 +23,13 @@ public class Damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dealingDmg)
+        if (dealingDmg && hpbar.fillAmount > dmgBound)
         {
-            if (dmgBound == hpbar.fillAmount)
-            {
-                dealingDmg = !dealingDmg;
-            }
-
-            hpbar.fillAmount -= dmgAmount / waitTime * Time.deltaTime;
+            hpbar.fillAmount -= dmgAmountTick;
+        }
+        else
+        {
+            dealingDmg = false;
         }
     }
 
